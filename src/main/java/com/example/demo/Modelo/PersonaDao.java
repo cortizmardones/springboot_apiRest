@@ -25,7 +25,7 @@ public class PersonaDao {
 				persona.setNombre(resultSet.getString("nombre"));
 				persona.setApellido(resultSet.getString("apellido"));
 				persona.setSexo(resultSet.getString("sexo").charAt(0));
-				persona.setActive(Boolean.parseBoolean(resultSet.getString("active")));
+				persona.setActive(resultSet.getBoolean("active"));
 				this.listaPersonas.add(persona);
 			}
 			
