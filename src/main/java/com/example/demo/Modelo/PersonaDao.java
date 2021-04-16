@@ -13,11 +13,8 @@ public class PersonaDao {
 	private ArrayList<Persona> listaPersonas = new ArrayList<>();
 	
 	public ArrayList<Persona> listarPersonas() {
-		try {
-			
-		    //Hago esto por si llamo el metodo desde el POSTMAN mas de una vez nop siga creciendo el json de respuesta. 
+		try { 
 			listaPersonas.clear();
-			
 			Connection connection = Conexion.retornarConexion();
 			PreparedStatement preparedStatement = connection.prepareStatement("SELECT * FROM persona");
 			ResultSet resultSet = preparedStatement.executeQuery();
@@ -27,14 +24,12 @@ public class PersonaDao {
 				persona.setId(Integer.parseInt(resultSet.getString("idPersona")));
 				persona.setNombre(resultSet.getString("nombre"));
 				persona.setApellido(resultSet.getString("apellido"));
-				//Convertir char en String
 				persona.setSexo(resultSet.getString("sexo").charAt(0));
 				persona.setActive(Boolean.parseBoolean(resultSet.getString("active")));
 				this.listaPersonas.add(persona);
 			}
 			
-			connection.close();
-			
+			connection.close();	
 			return listaPersonas;
 			
 		} catch (SQLException e) {
@@ -57,7 +52,7 @@ public class PersonaDao {
 				preparedStatement.setInt(5,0);
 			}
 			preparedStatement.executeUpdate();
-
+			connection.close();	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -68,6 +63,7 @@ public class PersonaDao {
 			Connection connection = Conexion.retornarConexion();
 			PreparedStatement preparedStatement = connection.prepareStatement("UPDATE persona SET nombre='" +persona.getNombre()+ "' , apellido='" +persona.getApellido()+ "', sexo='" +persona.getSexo()+ "' WHERE idPersona ='"+persona.getId()+ "'");
 			preparedStatement.executeUpdate();
+			connection.close();	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -78,6 +74,7 @@ public class PersonaDao {
 			Connection connection = Conexion.retornarConexion();
 			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM persona WHERE idPersona='"+ id +"'");
 			preparedStatement.executeUpdate();
+			connection.close();	
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
