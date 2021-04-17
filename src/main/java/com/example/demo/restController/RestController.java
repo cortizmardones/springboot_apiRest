@@ -21,10 +21,8 @@ public class RestController {
 	public ResponseEntity<ArrayList<Persona>> listarPersonas() {
 		ArrayList<Persona> lista = personaDao.listarPersonas();
 		if(lista != null && lista.size() > 0) {
-			//Retornar 200 + la lista
 			return ResponseEntity.ok(lista);
 		} else {
-			//Retornar 204 (La petición se ha completado con éxito pero su respuesta no tiene ningún contenido)
 			return ResponseEntity.noContent().build();
 		}
 	}
@@ -35,8 +33,13 @@ public class RestController {
 		persona.setApellido(apellido);
 		persona.setSexo(sexo);
 		persona.setActive(active);
-		personaDao.agregarPersona(persona);
-		return ResponseEntity.ok("Usuario: "+ nombre +" agregado");
+		int resultado = personaDao.agregarPersona(persona);
+		if(resultado > 0) {
+			return ResponseEntity.ok("Usuario: "+ nombre +" agregado");
+		}else {
+			return ResponseEntity.noContent().build();
+		}
+		
 	}
 
 	@PutMapping("/actualizarPersona/{id}/{nombre}/{apellido}/{sexo}/{active}")
@@ -46,14 +49,22 @@ public class RestController {
 		persona.setApellido(apellido);
 		persona.setSexo(sexo);
 		persona.setActive(active);
-		personaDao.actualizarPersona(persona);
-		return ResponseEntity.ok("Usuario ID: "+ id +" - "+ nombre +" actualizado");
+		int resultado = personaDao.actualizarPersona(persona);
+		if(resultado > 0 ) {
+			return ResponseEntity.ok("Usuario ID: "+ id +" - "+ nombre +" actualizado");
+		}else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 
 	@DeleteMapping("/eliminarPersona/{id}")
 	public ResponseEntity<String> eliminarPersona(@PathVariable("id") int id) {
-		personaDao.eliminarPersona(id);
-		return ResponseEntity.ok("Usuario ID: "+ id + " eliminado");
+		int resultado = personaDao.eliminarPersona(id);
+		if(resultado > 0) {
+			return ResponseEntity.ok("Usuario ID: "+ id + " eliminado");
+		}else {
+			return ResponseEntity.noContent().build();
+		}
 	}
 	
 // El autowired de arriba me evita tener que instanciar la clase PersonaDao y ocupar sus metodos mas facilmente (Inyeccion de dependencias)

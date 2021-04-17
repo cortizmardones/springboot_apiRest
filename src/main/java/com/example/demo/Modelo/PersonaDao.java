@@ -38,7 +38,8 @@ public class PersonaDao {
 		return null;
 	}
 
-	public void agregarPersona(Persona persona) {
+	public int agregarPersona(Persona persona) {
+		int resultado = 0;
 		try {
 			Connection connection = Conexion.retornarConexion();
 			PreparedStatement preparedStatement = connection.prepareStatement("INSERT INTO persona VALUES (?,?,?,?,?)");
@@ -51,34 +52,42 @@ public class PersonaDao {
 			} else {
 				preparedStatement.setInt(5, 0);
 			}
-			preparedStatement.executeUpdate();
+			resultado = preparedStatement.executeUpdate();
 			connection.close();
+			System.out.println("*** Resultado AgregarPersona: " + resultado + " ***");
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return resultado;
 	}
 
-	public void actualizarPersona(Persona persona) {
+	public int actualizarPersona(Persona persona) {
+		int resultado = 0;
 		try {
 			Connection connection = Conexion.retornarConexion();
 			PreparedStatement preparedStatement = connection.prepareStatement("UPDATE persona SET nombre='" + persona.getNombre() + "' , " + "apellido='" + persona.getApellido() + "', " + "sexo='" + persona.getSexo() + "', " + "active=" + persona.isActive() + " WHERE idPersona ='" + persona.getId() + "'");
-			preparedStatement.executeUpdate();
+			resultado = preparedStatement.executeUpdate();
 			connection.close();
+			System.out.println("*** Resultado ActualizarPersona: " + resultado + " ***");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return resultado;
 	}
 
-	public void eliminarPersona(int id) {
+	public int eliminarPersona(int id) {
+		int resultado = 0;
 		try {
 			Connection connection = Conexion.retornarConexion();
-			PreparedStatement preparedStatement = connection
-					.prepareStatement("DELETE FROM persona WHERE idPersona='" + id + "'");
-			preparedStatement.executeUpdate();
+			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM persona WHERE idPersona='" + id + "'");
+			resultado = preparedStatement.executeUpdate();
 			connection.close();
+			System.out.println("*** Resultado EliminarPersona: " + resultado + " ***");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		return resultado;
 	}
 
 }
