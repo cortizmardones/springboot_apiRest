@@ -1,9 +1,10 @@
 package com.example.demo.restController;
 
 import java.util.ArrayList;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import com.example.demo.Modelo.Persona;
 import com.example.demo.Modelo.PersonaDao;
@@ -72,17 +73,29 @@ public class RestControllerClass {
 		return "Raiz de la api";
 	}
 	
-// El autowired de arriba me evita tener que instanciar la clase PersonaDao y ocupar sus metodos mas facilmente (Inyeccion de dependencias)
-// PersonaDao personaDao = new PersonaDao();
-// Para hacer uso de esta función tengo que agregar la anotacion @Service en las clases a inyectar.
+	//Metodo para utilizar en todos los metodos del controlador (generalmente se utilizan para llenar select de html5 o cualquier otro elemento.)
+	@ModelAttribute("listaFormulario")
+	public List<String> listaFormulario(Model model) {
+		List<String> listaFormulario = new ArrayList<String>();
+		listaFormulario.add("Informática");
+		listaFormulario.add("Contabilidad");
+		listaFormulario.add("Recursos Humanos");
+		listaFormulario.add("Otro");
+		return listaFormulario;
+	}
+	
+//	Wiki
+// 	El autowired de arriba me evita tener que instanciar la clase PersonaDao y ocupar sus metodos mas facilmente (Inyeccion de dependencias)
+// 	PersonaDao personaDao = new PersonaDao();
+// 	Para hacer uso de esta función tengo que agregar la anotacion @Service en las clases a inyectar.
 
-	//  Metodos antiguos
+//  Metodos antiguos
 //	@GetMapping("/listarPersonas")
 //	public ArrayList<Persona> listarPersonas() {
 //		return personaDao.listarPersonas();
 //	}
 
-	//Un metodo con mas rutas
+//	Un metodo con mas rutas
 //	@GetMapping({"/listarPersonas","/otraRuta"})
 //	public ResponseEntity<ArrayList<Persona>> diferentesRutas() {
 //		ArrayList<Persona> lista = personaDao.listarPersonas();
@@ -92,5 +105,14 @@ public class RestControllerClass {
 //			return ResponseEntity.noContent().build();
 //		}
 //	}
+	
+//	Pasar datos a la vista
+//	@GetMapping("/index")
+//	public String pasarDatosVista(Model model) {
+//		model.addAttribute("titulo","Valor del titulo que aparecera en el HTML de la vista");
+//		return "index";
+//	}
+	
+
 
 }
