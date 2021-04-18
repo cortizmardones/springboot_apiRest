@@ -3,12 +3,15 @@ package com.example.demo.Modelo;
 import java.sql.*;
 import java.util.ArrayList;
 
+import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Conexion.Conexion;
 
 @Service
-public class PersonaDao {
+//Escribo primary porque si hay otra clase implementando de IPersonaDao esta sea la por defecto. 
+@Primary
+public class PersonaDao implements IPersonaDao {
 
 	private ArrayList<Persona> listaPersonas = new ArrayList<>();
 
