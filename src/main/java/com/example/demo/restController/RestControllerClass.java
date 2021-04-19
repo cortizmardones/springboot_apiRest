@@ -3,19 +3,21 @@ package com.example.demo.restController;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.demo.Modelo.IPersonaDao;
 import com.example.demo.Modelo.Persona;
-import com.example.demo.Modelo.PersonaDao;
+import com.example.demo.Modelo.PersonaDaoJDBC;
 
 @RestController
 @RequestMapping("/api")
 public class RestControllerClass {
 
 	@Autowired
+	@Qualifier("implementacionJPA")
 	private IPersonaDao personaDao;
 	
 	@Autowired

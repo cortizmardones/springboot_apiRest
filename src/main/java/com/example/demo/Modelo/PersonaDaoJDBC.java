@@ -3,18 +3,19 @@ package com.example.demo.Modelo;
 import java.sql.*;
 import java.util.ArrayList;
 
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.Conexion.Conexion;
 
-@Service
+@Service("implementacionJDBC")
 //Escribo primary porque si hay otra clase implementando de IPersonaDao esta sea la por defecto. 
-@Primary
-public class PersonaDao implements IPersonaDao {
+public class PersonaDaoJDBC implements IPersonaDao {
 
 	private ArrayList<Persona> listaPersonas = new ArrayList<>();
 
+	@Override
 	public ArrayList<Persona> listarPersonas() {
 		try {
 			listaPersonas.clear();
@@ -41,6 +42,7 @@ public class PersonaDao implements IPersonaDao {
 		return null;
 	}
 
+	@Override
 	public int agregarPersona(Persona persona) {
 		int resultado = 0;
 		try {
@@ -65,6 +67,7 @@ public class PersonaDao implements IPersonaDao {
 		return resultado;
 	}
 
+	@Override
 	public int actualizarPersona(Persona persona) {
 		int resultado = 0;
 		try {
@@ -78,7 +81,8 @@ public class PersonaDao implements IPersonaDao {
 		}
 		return resultado;
 	}
-
+	
+	@Override
 	public int eliminarPersona(int id) {
 		int resultado = 0;
 		try {
