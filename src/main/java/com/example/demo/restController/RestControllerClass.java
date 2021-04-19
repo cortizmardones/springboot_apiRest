@@ -36,6 +36,8 @@ public class RestControllerClass {
 
 	@PostMapping("/agregarPersona/{nombre}/{apellido}/{sexo}/{active}")
 	public ResponseEntity<String> agregarPersona(@PathVariable("nombre") String nombre, @PathVariable("apellido") String apellido, @PathVariable("sexo") char sexo, @PathVariable("active") boolean active) {
+		//Lo coloque en 0 porque en JPA fallaba si no reestablecia el id (venia el anterior - FIX)
+		persona.setId(0);
 		persona.setNombre(nombre);
 		persona.setApellido(apellido);
 		persona.setSexo(sexo);
@@ -65,7 +67,12 @@ public class RestControllerClass {
 
 	@DeleteMapping("/eliminarPersona/{id}")
 	public ResponseEntity<String> eliminarPersona(@PathVariable("id") int id) {
-		int resultado = personaDao.eliminarPersona(id);
+		persona.setId(id);
+		persona.setNombre("");
+		persona.setApellido("");
+		persona.setSexo('M');
+		persona.setActive(false);
+		int resultado = personaDao.eliminarPersona(persona);
 		if(resultado > 0) {
 			return ResponseEntity.ok("Usuario ID: "+ id + " eliminado");
 		}else {

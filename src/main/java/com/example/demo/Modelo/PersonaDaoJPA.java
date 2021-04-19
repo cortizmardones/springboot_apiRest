@@ -30,14 +30,18 @@ public class PersonaDaoJPA implements IPersonaDao {
 	}
 
 	@Override
+	@Transactional
 	public int actualizarPersona(Persona persona) {
 		return 0;
 	}
 
 	@Override
-	public int eliminarPersona(int id) {
-		return 0;
+	@Transactional
+	public int eliminarPersona(Persona persona) {
+		entityManager.remove(entityManager.contains(persona) ? persona : entityManager.merge(persona));		
+		return 1;
 	}
 	
+	//Falta implementar el find spara traer de una entidad a la vez
 
 }

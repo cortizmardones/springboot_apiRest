@@ -83,11 +83,11 @@ public class PersonaDaoJDBC implements IPersonaDao {
 	}
 	
 	@Override
-	public int eliminarPersona(int id) {
+	public int eliminarPersona(Persona persona) {
 		int resultado = 0;
 		try {
 			Connection connection = Conexion.retornarConexion();
-			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM persona WHERE idPersona='" + id + "'");
+			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM persona WHERE idPersona='" + persona.getId() + "'");
 			resultado = preparedStatement.executeUpdate();
 			connection.close();
 			System.out.println("*** Resultado EliminarPersona: " + resultado + " ***");

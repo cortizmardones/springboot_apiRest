@@ -10,6 +10,6 @@ public interface IPersonaDao {
 	public ArrayList<Persona> listarPersonas();
 	public int agregarPersona(Persona persona);
 	public int actualizarPersona(Persona persona);
-	public int eliminarPersona(int id);
+	public int eliminarPersona(Persona persona);
 	
 }
