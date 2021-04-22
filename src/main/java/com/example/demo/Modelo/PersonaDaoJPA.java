@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -32,16 +33,17 @@ public class PersonaDaoJPA implements IPersonaDao {
 	@Override
 	@Transactional
 	public int actualizarPersona(Persona persona) {
-		return 0;
+		entityManager.merge(persona);
+		return 1;
 	}
 
 	@Override
 	@Transactional
 	public int eliminarPersona(Persona persona) {
-		entityManager.remove(entityManager.contains(persona) ? persona : entityManager.merge(persona));		
+		entityManager.remove(entityManager.contains(persona) ? persona : entityManager.merge(persona));
 		return 1;
 	}
 	
-	//Falta implementar el find spara traer de una entidad a la vez
+	//Falta implementar el find para traer de una entidad a la vez
 
 }

@@ -17,15 +17,15 @@ import com.example.demo.Modelo.PersonaDaoJDBC;
 public class RestControllerClass {
 
 	@Autowired
-	@Qualifier("implementacionJPA")
+	@Qualifier("implementacionJDBC")
 	private IPersonaDao personaDao;
 	
 	@Autowired
 	private Persona persona;
-
+	
 //	Metodos de la api Rest
 	@GetMapping("/listarPersonas")
-	public ResponseEntity<ArrayList<Persona>> listarPersonas() {
+	public ResponseEntity<ArrayList<Persona>> listarPersonas() {		
 		ArrayList<Persona> lista = personaDao.listarPersonas();
 		if(lista != null && lista.size() > 0) {
 			return ResponseEntity.ok(lista);
@@ -68,10 +68,6 @@ public class RestControllerClass {
 	@DeleteMapping("/eliminarPersona/{id}")
 	public ResponseEntity<String> eliminarPersona(@PathVariable("id") int id) {
 		persona.setId(id);
-		persona.setNombre("");
-		persona.setApellido("");
-		persona.setSexo('M');
-		persona.setActive(false);
 		int resultado = personaDao.eliminarPersona(persona);
 		if(resultado > 0) {
 			return ResponseEntity.ok("Usuario ID: "+ id + " eliminado");

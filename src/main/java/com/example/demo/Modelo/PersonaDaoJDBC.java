@@ -72,7 +72,13 @@ public class PersonaDaoJDBC implements IPersonaDao {
 		int resultado = 0;
 		try {
 			Connection connection = Conexion.retornarConexion();
-			PreparedStatement preparedStatement = connection.prepareStatement("UPDATE persona SET nombre='" + persona.getNombre() + "' , " + "apellido='" + persona.getApellido() + "', " + "sexo='" + persona.getSexo() + "', " + "active=" + persona.isActive() + " WHERE idPersona ='" + persona.getId() + "'");
+			//PreparedStatement preparedStatement = connection.prepareStatement("UPDATE persona SET nombre='" + persona.getNombre() + "' , " + "apellido='" + persona.getApellido() + "', " + "sexo='" + persona.getSexo() + "', " + "active=" + persona.isActive() + " WHERE idPersona ='" + persona.getId() + "'");
+			PreparedStatement preparedStatement = connection.prepareStatement("UPDATE persona SET nombre = (?) , apellido = (?) , sexo = (?) , active = (?) WHERE idPersona = (?)");
+			preparedStatement.setString(1, persona.getNombre());
+			preparedStatement.setString(2, persona.getApellido());
+			preparedStatement.setString(3,String.valueOf(persona.getSexo()));
+			preparedStatement.setBoolean(4, persona.isActive());
+			preparedStatement.setInt(5,persona.getId());
 			resultado = preparedStatement.executeUpdate();
 			connection.close();
 			System.out.println("*** Resultado ActualizarPersona: " + resultado + " ***");
@@ -87,7 +93,9 @@ public class PersonaDaoJDBC implements IPersonaDao {
 		int resultado = 0;
 		try {
 			Connection connection = Conexion.retornarConexion();
-			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM persona WHERE idPersona='" + persona.getId() + "'");
+			//PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM persona WHERE idPersona='" + persona.getId() + "'");
+			PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM persona WHERE idPersona = (?)");
+			preparedStatement.setInt(1, persona.getId());
 			resultado = preparedStatement.executeUpdate();
 			connection.close();
 			System.out.println("*** Resultado EliminarPersona: " + resultado + " ***");
@@ -97,4 +105,5 @@ public class PersonaDaoJDBC implements IPersonaDao {
 		return resultado;
 	}
 
+	
 }

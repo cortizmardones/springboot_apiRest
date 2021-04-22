@@ -13,3 +13,9 @@ public interface IPersonaDao {
 	public int eliminarPersona(Persona persona);
 	
 }
+
+
+
+
+
+
